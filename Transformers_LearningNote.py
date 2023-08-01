@@ -34,11 +34,11 @@ res = generator(
 # {'generated_text': "In this course, we will teach you how to think differently about the consequences of an economic failure. In fact, we've been told by many of our teachers to"}]
 
 ## showing the funcionality of tokenizer (tokenizers need to convert our text inputs to numerical data.)
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, tokenizer 
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModel 
 #(this can be other classes for a specific purpose)
-model_name = "distilbert-base-uncased-finetuned-sst-2-english" # this is the same for pipeline("sentiment-analysis")
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+checkpoint = "distilbert-base-uncased-finetuned-sst-2-english" # this is the same for pipeline("sentiment-analysis")
+model = AutoModelForSequenceClassification.from_pretrained(checkpoint) # this is equal to model = AutoModel(checkpoint)
+tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
 classifier = pipeline("sentiment-analysis", model = model, okenizer = tokenizer)
 seq = "testing the tokenizer function"
