@@ -49,10 +49,16 @@ print(outputs.last_hidden_state.shape)
 tokens = tokenizer.tokenize(seq)
 print(tokens)
 # attention_mask is for attention layer that 0 means layer should ignore it
-ids = tokenizer.convert_tokens_to_ids(okens)
+ids = tokenizer.convert_tokens_to_ids(tokens)
 print(ids)
 decoded_string = tokenizer.decode(ids)
 print(decoded_string)
+
+import torch
+model_inputs = torch.tensor(ids)
+# using tensor as input for models. While the model accepts a lot of different arguments, only the input IDs are necessary. 
+output = model(model_inputs) #
+
 
 
 
