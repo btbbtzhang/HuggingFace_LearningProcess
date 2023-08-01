@@ -20,3 +20,22 @@ text-generation
 translation  
 zero-shot-classification (unlabeled input text)  
 
+## model & tokenizing 
+model includes the architeture and checkpoint from different foundation model (pretrained on large-scale data)
+convert text or other format of information into the numbers information (better for computer to understand)  
+
+## steplize into details by using pytorch
+using model, tokenizer and standard pytorch framework can have the same effect of using pipeline function from Transformers  
+
+ 
+## Save & Load
+The AutoModel class and all of its relatives are actually simple wrappers over the wide variety of models available in the library. It’s a clever wrapper as it can automatically guess the appropriate model architecture for your checkpoint, and then instantiates a model with this architecture.  
+
+However, if you know the type of model you want to use, you can use the class that defines its architecture directly. Let’s take a look at how this works with a BERT model.  
+
+![Screen Shot 2023-08-01 at 4 21 03 PM](https://github.com/btbbtzhang/HuggingFace_LearningProcess/assets/34163897/69385e04-bd36-4a8f-82ca-36c393543b2b)  
+
+## Model hub
+Different pretrained databases and models  
+
+## Finetune
