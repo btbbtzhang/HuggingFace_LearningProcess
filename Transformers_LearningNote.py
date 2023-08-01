@@ -37,13 +37,15 @@ res = generator(
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModel 
 #(this can be other classes for a specific purpose)
 checkpoint = "distilbert-base-uncased-finetuned-sst-2-english" # this is the same for pipeline("sentiment-analysis")
-model = AutoModelForSequenceClassification.from_pretrained(checkpoint) # this is equal to model = AutoModel(checkpoint)
+model = AutoModelForSequenceClassification.from_pretrained(checkpoint) # this is equal to model = AutoModel(checkpoint) (this model is usually used for general case)
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
 classifier = pipeline("sentiment-analysis", model = model, okenizer = tokenizer)
 seq = "testing the tokenizer function"
-res = tokenizer(seq)
+res = tokenizer(seq, padding = T, truncation = T, return_tensors = "pt")
 print(res)
+outputs = model(**res)
+print(outputs.last_hidden_state.shape)
 tokens = tokenizer.tokenize(seq)
 print(tokens)
 # attention_mask is for attention layer that 0 means layer should ignore it
@@ -51,6 +53,7 @@ ids = tokenizer.convert_tokens_to_ids(okens)
 print(ids)
 decoded_string = tokenizer.decode(ids)
 print(decoded_string)
+
 
 
 #### Transformers used and compared to pytorch
@@ -74,6 +77,8 @@ with torch.no_grad():
     labels = torch.argmax(predictions, dim=1)
     print(labels)
 
+
+### Saving and Loading
 # save the tokens and model
 save_path = "saved"
 tokenizer.save_pretrained(save_path)
