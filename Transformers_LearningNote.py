@@ -33,6 +33,78 @@ res = generator(
 # [{'generated_text': 'In this course, we will teach you how to practice the fundamentals in this seminar. It will take you through the process and teach you the techniques required in these classes'},
 # {'generated_text': "In this course, we will teach you how to think differently about the consequences of an economic failure. In fact, we've been told by many of our teachers to"}]
 
+## showing the funcionality of tokenizer (tokenizers need to convert our text inputs to numerical data.)
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, tokenizer 
+#(this can be other classes for a specific purpose)
+model_name = "distilbert-base-uncased-finetuned-sst-2-english" # this is the same for pipeline("sentiment-analysis")
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+classifier = pipeline("sentiment-analysis", model = model, okenizer = tokenizer)
+seq = "testing the tokenizer function"
+res = tokenizer(seq)
+print(res)
+tokens = tokenizer.tokenize(seq)
+print(tokens)
+# attention_mask is for attention layer that 0 means layer should ignore it
+ids = tokenizer.convert_tokens_to_ids(okens)
+print(ids)
+decoded_string = tokenizer.decode(ids)
+print(decoded_string)
 
 
+#### Transformers used and compared to pytorch
+import torch
+import torch.nn.functional as F
 
+x_train = ["I've been waiting for a HuggingFace course my whole life.", "Python is great!"]
+res = classifier(x_train)
+print(res)
+
+## doing the same as the above for the detailed steps in pytorch standard model, which could be used to finetune our model pytorch training loop
+
+batch = tokenizer(x_train, padding=True,truncation=T,max_length=512,return_tensors="pt") # eturn_tensors="pt": pytorch format
+print(batch)
+
+with torch.no_grad():
+    outputs = model(**batch) #batch is a dictionary
+    print(outputs)
+    predictions = F.softmax(outputs.logits, dim = 1)
+    print(predictions)
+    labels = torch.argmax(predictions, dim=1)
+    print(labels)
+
+# save the tokens and model
+save_path = "saved"
+tokenizer.save_pretrained(save_path)
+model.save_pretrained(save_path)
+
+# load the tokens and model
+tok = AutoToeknizer.from_pretrained(save_path)
+mod = AutoModelForSequenceClassification.from_pretrained(save_path)
+
+
+## model hub (using different model for different purposes)
+
+
+### Finetune our own model
+# 1. prpare dataset
+# 2. load pretrained tokenizer, call it with dataset -> encoding
+# 3. build pytorch dataset with encodings
+# 4. load pretrained model
+# 5. a). load trainer and train int
+# #  b). native pytorch trainning loop
+
+from transformers import Trainer, TrainingAruments
+training_args = TrainingAruments("test-trainer")
+
+trainer = Trainer(
+    model,
+    training_args,
+    train_dataset = tokenized_datasets["train"],
+    eval_dataset = tokenized_datasets["validation"],
+    data_collator = data_collator,
+    tokenizer = tokenizer,
+)
+
+trainer.train()
