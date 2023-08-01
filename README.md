@@ -8,12 +8,12 @@ Including 6 basic steps:
 The most basic object in the Transformers library is the pipeline() function, allowing us to directly input any text and get an intelligible answer (NLP mainly).  
 
 Some of the currently available pipelines are:  
-feature-extraction (get the vector representation of a text)
-fill-mask
-question-answering
-sentiment-analysis
-summarization
-text-generation
-translation
-zero-shot-classification (unlabeled input text)
+feature-extraction (get the vector representation of a text)  
+fill-mask (The idea of this task is to fill in the blanks in a given text:)  
+question-answering  
+sentiment-analysis  
+summarization  
+text-generation  
+translation  
+zero-shot-classification (unlabeled input text)  
 
