@@ -28,6 +28,10 @@ res = generator(
   max_lenghth = 33,
   num_return_sequences = 2,
 )
+#
+# Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+# [{'generated_text': 'In this course, we will teach you how to practice the fundamentals in this seminar. It will take you through the process and teach you the techniques required in these classes'},
+# {'generated_text': "In this course, we will teach you how to think differently about the consequences of an economic failure. In fact, we've been told by many of our teachers to"}]
 
 
 
