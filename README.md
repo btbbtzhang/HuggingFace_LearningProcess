@@ -72,3 +72,8 @@ trainer.train()
 4. Evaluation
    predictions = trainer.predict(tokenized_datasets["validation"])
    print(predictions.predictions.shape, predictions.label_ids.shape)
+   import numpy as np
+   preds = np.argmax(predictions.predictions, axis=-1)
+   import evaluate
+   metric = evaluate.load("glue", "mrpc")
+   metric.compute(predictions=preds, references=predictions.label_ids)
