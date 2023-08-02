@@ -53,3 +53,22 @@ Using the Transformers on different specific datasets
    ![Screen Shot 2023-08-02 at 10 09 20 AM](https://github.com/btbbtzhang/HuggingFace_TransformersTest/assets/34163897/d249d400-bab3-4112-8895-12ab1f6951a0)
 
 3. Training
+   Before running the training, we need to set up the training args, and the only argument you have to provide is a directory where the trained model will be saved, as well as the checkpoints along the way.
+   from transformers import TrainingArguments
+   training_args = TrainingArguments("test-trainer")
+   model = AutoModelForSequenceClassification.from_pretrained(checkpoint, num_labels=2)
+   from transformers import Trainer
+
+trainer = Trainer(
+    model,
+    training_args,
+    train_dataset=tokenized_datasets["train"],
+    eval_dataset=tokenized_datasets["validation"],
+    data_collator=data_collator,
+    tokenizer=tokenizer,
+)
+trainer.train()
+  
+4. Evaluation
+   predictions = trainer.predict(tokenized_datasets["validation"])
+   print(predictions.predictions.shape, predictions.label_ids.shape)
