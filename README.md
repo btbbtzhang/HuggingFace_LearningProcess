@@ -40,3 +40,16 @@ Different pretrained databases and models
 
 ## Finetune
 Using the Transformers on different specific datasets
+1. tokenize your specific data into numeric information based on the existing foundation model (checkpoint from model)
+   There is a way to speed up the tokenizing step by using Dataset.map() method.
+   def tokenize_function(example):
+    return tokenizer(example["sentence1"], example["sentence2"], truncation=True)
+   tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
+2. during the tokenize, the map() method can speed up the loading time, and batch the data into different smaller size groups, now we need a padding function can dynamically pad each batch instead of the entire dataset. Here the function DataCollatorWithPadding could be used to realize it.
+   from transformers import DataCollatorWithPadding
+   data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+   Here is the detailed example:
+
+   ![Screen Shot 2023-08-02 at 10 09 20 AM](https://github.com/btbbtzhang/HuggingFace_TransformersTest/assets/34163897/d249d400-bab3-4112-8895-12ab1f6951a0)
+
+3. Training
